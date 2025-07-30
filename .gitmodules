@@ -1,0 +1,6 @@
+[submodule "src/usb_cam"]
+	path = src/usb_cam
+	url = https://github.com/ros-drivers/usb_cam.git
+[submodule "src/rmw_zenoh"]
+	path = src/rmw_zenoh
+	url = https://github.com/ros2/rmw_zenoh.git
