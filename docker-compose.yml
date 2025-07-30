@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  devcontainer:
+    build: 
+      context: .devcontainer
+      dockerfile: Dockerfile
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - type: bind
+        source: . 
+        target: /workspace # .. means one level up from .devcontainer/
+    working_dir: /workspace
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/video2:/dev/video2"
+      #- "/dev/video4:/dev/video4" 
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=${XAUTHORITY:-/tmp/.docker.xauth}
+    user: root
+    command: bash
+    tty: true
+    stdin_open: true
+    networks:
+      - ros2_zenoh_net
+
+networks:
+  ros2_zenoh_net:
+    external: true
