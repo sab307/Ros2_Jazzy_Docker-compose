@@ -1,0 +1,12 @@
+topics:
+ - name: "/random_value"
+   type: "webots_ros2_msgs/msg/FloatStamped"
+   field: "Float64"
+   condition: "above"
+   threshold: 50.0
+
+  # - name: "/"
+  #   type: "std_msgs/msg/Float64"
+  #   field: "data"
+  #   condition: "above"
+  #   threshold: 60
