@@ -11,7 +11,9 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     net-tools \
     iputils-ping\
+    babeltrace\
     && rm -rf /var/lib/apt/lists/*
+
 
 # Set up a virtual environment
 RUN python3 -m venv /opt/venv
@@ -20,6 +22,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Upgrade pip and install colcon-common-extensions
 RUN pip install --upgrade pip
 RUN pip install -U colcon-common-extensions
+RUN pip install bokeh
 
 # Install zsh and wget
 RUN apt-get update && apt-get install -y \
@@ -36,6 +39,7 @@ RUN sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org
 # Install ROS 2 Jazzy packages and rosdep
 RUN apt-get update && apt-get install -y ros-jazzy-desktop python3-rosdep && rm -rf /var/lib/apt/lists/*
 
+
 # Initialize rosdep
 RUN rosdep init && rosdep update
 
@@ -43,7 +47,8 @@ RUN rosdep init && rosdep update
 ENV ROS_DISTRO=jazzy
 ENV ROS_ROOT=/opt/ros/$ROS_DISTRO
 
+
 # Set up entrypoint
-#COPY setup_ros2_jazzy.sh /
-#RUN chmod +x /setup_ros2_jazzy.sh
-#ENTRYPOINT ["/setup_ros2_jazzy.sh"]
+COPY setup_ros2_jazzy.sh /
+RUN chmod +x setup_ros2_jazzy.sh
+#ENTRYPOINT ["setup_ros2_jazzy.sh"]
